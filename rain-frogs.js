@@ -1,3 +1,4 @@
+// https://blog.logrocket.com/exploring-web-audio-api-web-midi-api/
 // import {
 // getHz,
 // freqs,
@@ -63,9 +64,8 @@ const freqs = (start, end) => {
     });
 };
 
-const keysData = freqs(-48, 40);
-
-console.log( "! keysData", keysData );
+// const keysData = freqs(-48, 40);
+const keysData = freqs(-21, 27);
 
 const getContainer = () => (document.querySelector("body"))
 
@@ -76,12 +76,10 @@ const applyKeysToElements = (keys, elements) => {
   elements.forEach(
     element => {
       element.onmouseenter = event => {
-      console.log("! event", event);
       noteon(event.target, [{freq: event.target.dataset.freq}])
     };
 
     element.onmouseleave = event => {
-      console.log("! event", event);
       noteoff(event.target)
     };
     element.name = `midi_${keys[i].midiNote}`
@@ -142,9 +140,7 @@ function noteon(key) {
     gainNode.gain.value = 0.33
     notemap.set(key.name, createOscillator(key.dataset.freq))
     notemap.get(key.name).start(0)
-    console.log(key.name);
 
-    console.log(key.dataset.freq);
     key.classList.add("on")
   }
 }
@@ -168,17 +164,11 @@ function soundsOfResy() {
   );
 
   container.addEventListener("noteon", (event) => {
-    console.log(
-     "!event", event,
-    )
     const notes = document.getElementsByName(`midi_${event.detail.note}`);
     // container.elements[`midi_${event.detail.note}`]
     // const note = event.detail.note;
-    console.log(
-      "!notes", notes,
-    )
     // notes[0].style.setProperty("--v", event.detail.velocity)
-    noteon(notes[0], [{freq: notes[0].dataset.freq}])
+    noteon(notes[0], [{freq: notes[0].dataset.freq}]);
   })
 
   container.addEventListener("noteoff", (event) => {
@@ -186,6 +176,66 @@ function soundsOfResy() {
     //const note = container.elements[`midi_${event.detail.note}`]
     noteoff(notes[0])
   })
+}
+function drawKeyboard() {
+  const container = document.createElement('div');
+  container.id = 'keyboard-container';
+
+  const form = document.createElement('form');
+  form.className = 'synth';
+  form.id = 'midi';
+  form.style = '--synth-bgc: hsl(216, 69%, 27%);--_h:216;';
+
+  const keysContainer = document.createElement('div');
+  keysContainer.classList = ['kb kb--49'];
+  keysContainer.id = 'kb49';
+
+  form.append(keysContainer);
+  container.append(form);
+
+  document.querySelector('body').appendChild(container);
+}
+
+const render = (data) => data.map(item => `
+  <div data-note="${item.note}${item.octave}"
+  data-freq="${item.freq}" style="--gcs:${item.offset}" 
+  type="button>"></div>`).join('\n')
+
+
+drawKeyboard();
+
+kb49.innerHTML = render(keysData);
+
+const keys = midi.querySelectorAll('#kb49>div');
+keys.forEach(key => {
+  key.addEventListener('pointerdown', event => {
+    console.log('key', key)
+    noteon(event.target, [{freq: event.target.dataset.freq}]);
+
+    const frogToAppend = getFrog();
+    frogToAppend.classList.add(`frog-${event.target.dataset.note[0]}`);
+    key.append(frogToAppend);
+
+    // document.querySelector('body').append(getFrog());
+  })
+  key.addEventListener('pointerup', event => { noteoff(event.target) })
+  key.addEventListener('pointerleave', event => { noteoff(event.target) })
+})
+
+function getFrog() {
+  const frog = document.createElement('div');
+  frog.className = 'frog';
+  const frogface = document.createElement('div');
+  frogface.className = 'frogface';
+  const frogEyes = document.createElement('div');
+  frogEyes.className = 'frogeyes';
+  const frogtongue = document.createElement('div');
+  frogtongue.className = 'frogtongue';
+
+  frogface.appendChild(frogEyes);
+  frogface.appendChild(frogtongue);
+  frog.appendChild(frogface);
+  return frog;
 }
 
 soundsOfResy();

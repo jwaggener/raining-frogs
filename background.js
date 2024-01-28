@@ -39,6 +39,16 @@ chrome.action.onClicked.addListener(async (tab) => {
       target: { tabId: tab.id }
     });
 
+    await chrome.scripting.insertCSS({
+      files: ['midi-piano.css'],
+      target: { tabId: tab.id }
+    });
+
+    await chrome.scripting.insertCSS({
+      files: ['frog.css'],
+      target: { tabId: tab.id }
+    });
+
   } else {
     console.log('OFF');
     // this doesn't stop the frogs from raining

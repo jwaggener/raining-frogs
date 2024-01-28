@@ -1,12 +1,11 @@
-.note::after {
-  //position: absolute;
-  display: block;
-  top: 0;
+/*.note::after {
+  /* position: absolute; */
+  /*top: 0;
   right: 0;
   font-size: 24px;
-}
+}*/
 
-.note.on::after {
+/*.note.on::after {
   color: yellow;
   filter: drop-shadow(-2px 2px .5px #000000);
   top: -5px;
@@ -66,4 +65,4 @@
 
 .G\#-note::after {
   content: 'G#'
-}
+}*/
