@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+#keyboard-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 .kb {
   block-size: var(--_bs, 8em);
   display: grid;
