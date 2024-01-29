@@ -1,3 +1,12 @@
+// this is the content script
+// chrome.runtime.onMessage.addListener(
+//   function(message, sender, sendResponse) {
+//      console.log(
+//       'message', message
+//      );
+//   }
+// );
+
 // https://blog.logrocket.com/exploring-web-audio-api-web-midi-api/
 // import {
 // getHz,

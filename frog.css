@@ -49,7 +49,7 @@
   height: calc(25px / var(--_d, 1) );
   width: calc(25px / var(--_d, 1) );
   border-radius: calc(50% / var(--_d, 1) );
-  box-shadow: 0 0 0 calc(10px / var(--_d, 1) ) #ffffff, 0 0 0 calc(18px / var(--_d, 1) ) #8ebc00;
+  box-shadow: 0 0 0 calc(10px / var(--_d, 1) ) #ffffff, 0 0 0 calc(18px / var(--_d, 1) ) var( --_face1, #8ebc00);
 }
 .frogeyes {
   left: calc(35px / var(--_d, 1) );
